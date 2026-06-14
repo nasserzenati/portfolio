@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nasser Zenati — AI · Data · Automation</title>
+<meta name="description" content="Nasser Zenati — je conçois des systèmes IA sécurisés, gouvernés et déployables. Aegis, LauBnb, machine learning. nLPD / RGPD / gouvernance des données.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1422; --surface:#0F1D30; --surface2:#13243A; --line:#22344B;
+    --txt:#E9F0F8; --muted:#8DA2BA; --faint:#5E748F;
+    --accent:#4EA8F2; --accent-2:#7CC4FF; --signal:#35D6A0; --danger:#FF7A7A;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --disp:'Space Grotesk','Inter',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(70rem 40rem at 80% -10%, rgba(78,168,242,.10), transparent 60%),
+      radial-gradient(50rem 40rem at -10% 10%, rgba(53,214,160,.06), transparent 55%);
+    background-attachment:fixed;}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);font-weight:500}
+
+  /* top bar */
+  header.bar{position:sticky;top:0;z-index:30;backdrop-filter:saturate(1.3) blur(12px);
+    background:rgba(10,20,34,.72);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:-.01em;
+    display:inline-flex;align-items:center;gap:10px}
+  .brand .live{width:7px;height:7px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 0 0 rgba(53,214,160,.6);animation:beat 2.4s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(53,214,160,.5)}70%{box-shadow:0 0 0 7px rgba(53,214,160,0)}100%{box-shadow:0 0 0 0 rgba(53,214,160,0)}}
+  .nav{display:flex;align-items:center;gap:24px}
+  .nav a.navlink{font-size:14px;color:var(--muted);font-weight:500}
+  .nav a.navlink:hover{color:var(--txt)}
+  .langtog{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .langtog button{border:0;background:transparent;padding:6px 12px;cursor:pointer;
+    color:var(--muted);font-family:var(--mono);font-size:12px;font-weight:500}
+  .langtog button.on{background:var(--accent);color:#05101f}
+  @media(max-width:700px){.nav .navlink{display:none}}
+
+  /* hero */
+  .hero{padding:92px 0 64px;border-bottom:1px solid var(--line)}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 13px;margin-bottom:24px}
+  .kicker b{color:var(--signal);font-weight:500}
+  .hero h1{font-family:var(--disp);font-weight:700;letter-spacing:-.025em;
+    font-size:clamp(36px,6.2vw,64px);line-height:1.03;margin:0 0 .3em;max-width:17ch}
+  .hero h1 .hl{background:linear-gradient(120deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(17px,2.1vw,20px);color:var(--muted);max-width:56ch;margin:0}
+  .cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:11px;
+    font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--surface);
+    color:var(--txt);transition:.18s}
+  .btn:hover{transform:translateY(-1px);border-color:var(--accent);box-shadow:0 8px 26px rgba(0,0,0,.35)}
+  .btn.pri{background:linear-gradient(120deg,var(--accent),#3f93dd);color:#05101f;border-color:transparent}
+  .btn.pri:hover{filter:brightness(1.06)}
+
+  /* signature: control plane diagram */
+  .plane{position:relative;margin-top:48px;border:1px solid var(--line);border-radius:16px;
+    background:radial-gradient(120% 150% at 50% -30%, rgba(78,168,242,.08), transparent 60%), var(--surface);
+    padding:22px 22px 24px}
+  .plane-head{margin-bottom:20px}
+  .plane-ttl{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted)}
+  .flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+  .node{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap;
+    font-family:var(--mono);font-size:13px;color:var(--muted);background:var(--surface2);
+    border:1px solid var(--line);border-radius:11px;padding:11px 15px}
+  .node i{font-style:normal;font-size:10px;color:var(--faint)}
+  .hop{flex:0 0 26px;text-align:center;color:var(--faint);font-family:var(--mono);font-size:16px}
+  .gate{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px 17px 14px;
+    border:1px solid rgba(78,168,242,.40);border-radius:14px;
+    background:linear-gradient(180deg,rgba(78,168,242,.09),rgba(53,214,160,.04));
+    box-shadow:0 8px 28px rgba(78,168,242,.10);animation:gateglow 4.2s ease-in-out infinite}
+  @keyframes gateglow{0%,100%{box-shadow:0 8px 24px rgba(78,168,242,.07)}
+    50%{box-shadow:0 10px 34px rgba(78,168,242,.17)}}
+  .gate-lbl{position:absolute;top:-8px;left:15px;font-family:var(--mono);font-size:10px;font-weight:700;
+    letter-spacing:.16em;color:var(--accent);background:var(--surface);padding:0 7px}
+  .gate-row{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--txt)}
+  .gate-row .gk{color:var(--faint);min-width:64px}
+  .chip{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:999px;font-weight:500;
+    border:1px solid transparent}
+  .chip.ok{background:rgba(53,214,160,.13);color:var(--signal);border-color:rgba(53,214,160,.32);
+    animation:pulse 3.4s ease-in-out infinite}
+  .chip.no{background:rgba(255,122,122,.08);color:var(--danger);border-color:rgba(255,122,122,.22)}
+  .chip.scan{background:rgba(124,196,255,.12);color:var(--accent-2);border-color:rgba(124,196,255,.30)}
+  .chip.log{background:rgba(78,168,242,.13);color:var(--accent);border-color:rgba(78,168,242,.32);
+    animation:pulse 3.4s ease-in-out .9s infinite}
+  @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+  @media(max-width:640px){.flow{flex-direction:column;align-items:stretch}
+    .node,.gate{width:100%}.hop{transform:rotate(90deg);flex-basis:auto;padding:2px 0}}
+
+  /* sections */
+  section{padding:76px 0;border-bottom:1px solid var(--line)}
+  .shead{margin-bottom:36px}
+  .shead h2{font-family:var(--disp);font-weight:600;letter-spacing:-.02em;
+    font-size:clamp(25px,3.5vw,34px);margin:.25em 0 0}
+  .lead{color:var(--muted);max-width:60ch}
+
+  .about p{font-size:18px;max-width:66ch;margin:0 0 16px;color:#cdd9e8}
+  .about strong{color:var(--txt);font-weight:600}
+
+  /* work */
+  .work{display:grid;gap:18px}
+  .card{position:relative;border:1px solid var(--line);border-radius:18px;
+    background:linear-gradient(180deg,var(--surface),rgba(15,29,48,.55));
+    display:grid;grid-template-columns:4px 1fr;overflow:hidden;transition:.2s}
+  .card:hover{transform:translateY(-3px);border-color:#2E466A;box-shadow:0 18px 44px rgba(0,0,0,.4)}
+  .rail{background:linear-gradient(var(--accent),#2f6fbf)}
+  .card.aegis .rail{background:linear-gradient(var(--signal),#1f9a72)}
+  .cbody{padding:28px 30px}
+  .ctop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .ctop h3{font-family:var(--disp);font-weight:600;font-size:23px;letter-spacing:-.01em;margin:0}
+  .tags{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:3px 11px}
+  .card p{margin:15px 0 16px;max-width:66ch;color:#c4d2e3}
+  .stack{font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-bottom:10px}
+  .clinks{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;font-weight:600}
+  .clinks a{color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+  .clinks a:hover{color:var(--accent-2)}
+  .clinks a.muted{color:var(--muted)}
+  .clinks a.muted:hover{color:var(--txt)}
+
+  /* skills */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .skill{border:1px solid var(--line);border-radius:15px;padding:22px;background:var(--surface)}
+  .skill.hot{border-color:rgba(53,214,160,.35);background:linear-gradient(180deg,rgba(53,214,160,.06),var(--surface))}
+  .skill h4{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 13px;font-weight:500}
+  .skill.hot h4{color:var(--signal)}
+  .skill ul{margin:0;padding:0;list-style:none}
+  .skill li{padding:6px 0;font-size:15px;border-top:1px solid var(--line);color:#cdd9e8}
+  .skill li:first-child{border-top:0}
+
+  .contact .lead{margin-bottom:26px}
+  .contactlinks{display:flex;flex-wrap:wrap;gap:12px}
+
+  footer{padding:40px 0;color:var(--faint);font-size:13px;font-family:var(--mono)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .gate,.chip.ok,.chip.log,.chip.scan,.brand .live{animation:none}
+    html{scroll-behavior:auto}.btn:hover,.card:hover{transform:none}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:5px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="live" aria-hidden="true"></span>Nasser Zenati</a>
+    <nav class="nav">
+      <a class="navlink" href="#work" data-fr="Travaux" data-en="Work">Travaux</a>
+      <a class="navlink" href="#skills" data-fr="Compétences" data-en="Skills">Compétences</a>
+      <a class="navlink" href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+      <span class="langtog" role="group" aria-label="Language">
+        <button id="fr" class="on" onclick="setLang('fr')">FR</button>
+        <button id="en" onclick="setLang('en')">EN</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker"><b>●</b> <span data-fr="AI Operations · Data · Automatisation" data-en="AI Operations · Data · Automation">AI Operations · Data · Automatisation</span></span>
+    <h1 data-fr="Je conçois des systèmes IA <span class='hl'>sécurisés, gouvernés et déployables</span>."
+        data-en="I build AI systems that are <span class='hl'>secure, governed and deployable</span>.">Je conçois des systèmes IA <span class="hl">sécurisés, gouvernés et déployables</span>.</h1>
+    <p class="lede"
+       data-fr="À l'interface du métier et de la technique : je transforme un besoin en outil livré, gouverné et adopté. Builder agentique, sensible à la sécurité et à la conformité (nLPD, RGPD). Business &amp; Data Analyst en freelance, Master MSI (HES-SO)."
+       data-en="At the intersection of business and engineering: I turn a need into a tool that ships, stays governed, and gets adopted. Agentic builder, security- and compliance-minded (nFADP, GDPR). Freelance Business &amp; Data Analyst, MSc Information Systems Management (HES-SO).">À l'interface du métier et de la technique : je transforme un besoin en outil livré, gouverné et adopté. Builder agentique, sensible à la sécurité et à la conformité (nLPD, RGPD). Business &amp; Data Analyst en freelance, Master MSI (HES-SO).</p>
+
+    <div class="cta">
+      <a class="btn pri" href="#work" data-fr="Voir mes projets" data-en="See my work">Voir mes projets</a>
+      <a class="btn" href="https://github.com/nasserzenati" target="_blank" rel="noopener">GitHub &#8599;</a>
+    </div>
+
+    <div class="plane reveal">
+      <div class="plane-head">
+        <span class="plane-ttl" data-fr="Control plane : comment une requête traverse Aegis" data-en="Control plane: how a request flows through Aegis">Control plane : comment une requête traverse Aegis</span>
+      </div>
+      <div class="flow">
+        <span class="node">request</span>
+        <span class="hop">&rarr;</span>
+        <span class="node">agent<i>LLM local</i></span>
+        <span class="hop">&rarr;</span>
+        <span class="gate">
+          <span class="gate-lbl">AEGIS</span>
+          <span class="gate-row"><span class="gk">policy</span><span class="chip ok">allow</span><span class="chip no">deny</span></span>
+          <span class="gate-row"><span class="gk">firewall</span><span class="chip scan">screened</span></span>
+          <span class="gate-row"><span class="gk">audit</span><span class="chip log">logged</span></span>
+        </span>
+        <span class="hop">&rarr;</span>
+        <span class="node">tool</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap reveal">
+    <span class="eyebrow" data-fr="Profil" data-en="About">Profil</span>
+    <div class="shead"><h2 data-fr="Construire, sécuriser, faire adopter." data-en="Build it, secure it, get it adopted.">Construire, sécuriser, faire adopter.</h2></div>
+    <p data-fr="Depuis 2024, j'accompagne des PME en freelance : extractions et analyses de données, automatisation des reportings, et conception d'outils qui modernisent le travail des équipes. Mon passé d'entrepreneur me donne l'autonomie et le sens du concret ; mon Master MSI, la culture du système d'information."
+       data-en="Since 2024 I've worked with SMEs as a freelancer: data extraction and analysis, reporting automation, and tools that modernise how teams work. My background as a founder gives me autonomy and a bias for shipping; my MSc in Information Systems Management, the systems grounding.">Depuis 2024, j'accompagne des PME en freelance : extractions et analyses de données, automatisation des reportings, et conception d'outils qui modernisent le travail des équipes. Mon passé d'entrepreneur me donne l'autonomie et le sens du concret ; mon Master MSI, la culture du système d'information.</p>
+    <p data-fr="Ce qui me distingue : je ne m'arrête pas au prototype. Je pense gouvernance, sécurité et conformité (nLPD, RGPD, gouvernance des données) pour que ce que je construis tienne en production, même en environnement régulé."
+       data-en="What sets me apart: I don't stop at the prototype. I think governance, security and compliance (Swiss nFADP, GDPR, data governance) so what I build holds up in production, even in regulated environments.">Ce qui me distingue : je ne m'arrête pas au prototype. Je pense gouvernance, sécurité et conformité (nLPD, RGPD, gouvernance des données) pour que ce que je construis tienne en production, même en environnement régulé.</p>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="shead reveal">
+      <span class="eyebrow" data-fr="Travaux sélectionnés" data-en="Selected work">Travaux sélectionnés</span>
+      <h2 data-fr="Trois projets, trois preuves." data-en="Three projects, three proofs.">Trois projets, trois preuves.</h2>
+    </div>
+
+    <div class="work">
+      <article class="card aegis reveal">
+        <div class="rail"></div>
+        <div class="cbody">
+          <div class="ctop">
+            <h3>Aegis</h3>
+            <div class="tags"><span class="tag">AI security</span><span class="tag">MCP</span><span class="tag">Audit</span><span class="tag">Open-source</span></div>
+          </div>
+          <p data-fr="Un « control plane » qui s'intercale entre un agent IA et ses outils : moteur d'autorisation déterministe, firewall anti-injection (directe et indirecte), et audit trail complet avec métriques de ROI. Objectif : rendre un agent déployable et auditable en environnement régulé. Modèle exécuté en local — aucune donnée ne quitte la machine."
+             data-en="A control plane between an AI agent and its tools: deterministic policy engine, prompt-injection firewall (direct and indirect), and a full audit trail with ROI metrics. The goal: make an agent deployable and auditable in regulated environments. The model runs locally — no data leaves the machine.">Un « control plane » qui s'intercale entre un agent IA et ses outils : moteur d'autorisation déterministe, firewall anti-injection (directe et indirecte), et audit trail complet avec métriques de ROI. Objectif : rendre un agent déployable et auditable en environnement régulé. Modèle exécuté en local — aucune donnée ne quitte la machine.</p>
+          <div class="stack">Python · Ollama (LLM local) · MCP · SQLite · Streamlit</div>
+          <div class="clinks">
+            <a href="https://github.com/nasserzenati/aegis" target="_blank" rel="noopener">GitHub &#8599;</a>
+            <a href="https://aegis-nz.streamlit.app/" target="_blank" rel="noopener" data-fr="Démo interactive &#8599;" data-en="Interactive demo &#8599;">Démo interactive &#8599;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="rail"></div>
+        <div class="cbody">
+          <div class="ctop">
+            <h3>LauBnb</h3>
+            <div class="tags"><span class="tag">Data pipeline</span><span class="tag">Visualisation</span><span class="tag">IA</span></div>
+          </div>
+          <p data-fr="Une application qui collecte et fiabilise plus de 1 000 annonces sur 17 zones (jointure spatiale), visualise le marché par quartier, et génère automatiquement des rapports d'aide à la décision via un agent IA conversationnel."
+             data-en="An app that collects and cleans 1,000+ listings across 17 zones (spatial join), visualises the market by neighbourhood, and automatically generates decision-support reports through a conversational AI agent.">Une application qui collecte et fiabilise plus de 1 000 annonces sur 17 zones (jointure spatiale), visualise le marché par quartier, et génère automatiquement des rapports d'aide à la décision via un agent IA conversationnel.</p>
+          <div class="stack">Python · Streamlit · agent LLM · jointure spatiale</div>
+          <div class="clinks">
+            <a href="https://laubnb-advisor.streamlit.app/" target="_blank" rel="noopener" data-fr="Application en ligne &#8599;" data-en="Live app &#8599;">Application en ligne &#8599;</a>
+            <a class="muted" href="docs/Rapport_LauBnb_DataPipeline.pdf" target="_blank" rel="noopener" data-fr="Lire le rapport (PDF)" data-en="Read the report (PDF)">Lire le rapport (PDF)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="rail"></div>
+        <div class="cbody">
+          <div class="ctop">
+            <h3 data-fr="Scoring &amp; segmentation client" data-en="Customer scoring &amp; segmentation">Scoring &amp; segmentation client</h3>
+            <div class="tags"><span class="tag">Machine learning</span><span class="tag">Prédictif</span></div>
+          </div>
+          <p data-fr="Pipeline ML sur 631 000 transactions (5 sources jointes, nettoyage, valeurs aberrantes) : modèle prédictif de valeur client (Random Forest, R²=0.96, contrôle du data leakage) et segmentation K-means en 5 profils actionnables."
+             data-en="ML pipeline on 631,000 transactions (5 joined sources, cleaning, outlier handling): predictive customer-value model (Random Forest, R²=0.96, data-leakage control) and K-means segmentation into 5 actionable profiles.">Pipeline ML sur 631 000 transactions (5 sources jointes, nettoyage, valeurs aberrantes) : modèle prédictif de valeur client (Random Forest, R²=0.96, contrôle du data leakage) et segmentation K-means en 5 profils actionnables.</p>
+          <div class="stack">Dataiku · Python · scikit-learn</div>
+          <div class="clinks">
+            <a class="muted" href="docs/Rapport_ML.pdf" target="_blank" rel="noopener" data-fr="Lire le rapport (PDF)" data-en="Read the report (PDF)">Lire le rapport (PDF)</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="shead reveal">
+      <span class="eyebrow" data-fr="Compétences" data-en="Skills">Compétences</span>
+      <h2 data-fr="La stack." data-en="The stack.">La stack.</h2>
+    </div>
+    <div class="skills">
+      <div class="skill hot reveal"><h4 data-fr="Gouvernance &amp; conformité" data-en="Governance &amp; compliance">Gouvernance &amp; conformité</h4>
+        <ul>
+          <li data-fr="nLPD (Suisse), RGPD" data-en="Swiss nFADP, GDPR">nLPD (Suisse), RGPD</li>
+          <li data-fr="Gouvernance des données, MDM" data-en="Data governance, MDM">Gouvernance des données, MDM</li>
+          <li data-fr="Audit trail, défense anti-injection" data-en="Audit trails, injection defense">Audit trail, défense anti-injection</li>
+        </ul></div>
+      <div class="skill reveal"><h4 data-fr="IA &amp; agentique" data-en="AI &amp; agentic">IA &amp; agentique</h4>
+        <ul>
+          <li data-fr="Systèmes multi-agents" data-en="Multi-agent systems">Systèmes multi-agents</li>
+          <li>Ollama (LLM local), MCP</li>
+          <li data-fr="Machine learning (scikit-learn)" data-en="Machine learning (scikit-learn)">Machine learning (scikit-learn)</li>
+        </ul></div>
+      <div class="skill reveal"><h4 data-fr="Données &amp; analyse" data-en="Data &amp; analysis">Données &amp; analyse</h4>
+        <ul>
+          <li>Python, SQL</li>
+          <li data-fr="Power BI, visualisation" data-en="Power BI, visualisation">Power BI, visualisation</li>
+          <li data-fr="Pipelines, qualité &amp; traçabilité" data-en="Pipelines, quality &amp; traceability">Pipelines, qualité &amp; traçabilité</li>
+        </ul></div>
+      <div class="skill reveal"><h4 data-fr="Automatisation" data-en="Automation">Automatisation</h4>
+        <ul>
+          <li data-fr="Automatisation des reportings" data-en="Reporting automation">Automatisation des reportings</li>
+          <li>Power Automate</li>
+          <li>n8n, workflows</li>
+        </ul></div>
+      <div class="skill reveal"><h4 data-fr="Analyse métier" data-en="Business analysis">Analyse métier</h4>
+        <ul>
+          <li>BPMN</li>
+          <li data-fr="Recueil des besoins, ateliers" data-en="Requirements, workshops">Recueil des besoins, ateliers</li>
+          <li>JIRA, specs</li>
+        </ul></div>
+      <div class="skill reveal"><h4 data-fr="Langues" data-en="Languages">Langues</h4>
+        <ul>
+          <li data-fr="Français — natif" data-en="French — native">Français — natif</li>
+          <li data-fr="Anglais — courant" data-en="English — fluent">Anglais — courant</li>
+          <li data-fr="Arabe — avancé" data-en="Arabic — advanced">Arabe — avancé</li>
+        </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap reveal">
+    <span class="eyebrow" data-fr="Contact" data-en="Contact">Contact</span>
+    <div class="shead"><h2 data-fr="Parlons-en." data-en="Let's talk.">Parlons-en.</h2></div>
+    <p class="lead" data-fr="Ouvert aux postes IA, data et automatisation dans la région Genève – Lausanne. Le plus simple est de m'écrire directement."
+       data-en="Open to AI, data and automation roles in the Geneva – Lausanne area. The easiest way is to email me directly.">Ouvert aux postes IA, data et automatisation dans la région Genève – Lausanne. Le plus simple est de m'écrire directement.</p>
+    <div class="contactlinks">
+      <a class="btn pri" href="mailto:nasserzenati.contact@gmail.com">nasserzenati.contact@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/nasserzenati" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+      <a class="btn" href="https://github.com/nasserzenati" target="_blank" rel="noopener">GitHub &#8599;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Nasser Zenati</span>
+    <span data-fr="Conçu et codé par mes soins." data-en="Designed &amp; coded by me.">Conçu et codé par mes soins.</span>
+  </div>
+</footer>
+
+<script>
+  function setLang(l){
+    document.documentElement.lang=l;
+    document.getElementById('fr').classList.toggle('on', l==='fr');
+    document.getElementById('en').classList.toggle('on', l==='en');
+    document.querySelectorAll('[data-'+l+']').forEach(function(el){
+      el.innerHTML = el.getAttribute('data-'+l);
+    });
+  }
+  (function(){
+    var p=new URLSearchParams(location.search).get('lang');
+    setLang(p==='en'?'en':'fr');
+  })();
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+</script>
+</body>
+</html>
