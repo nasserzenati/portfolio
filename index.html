@@ -101,6 +101,30 @@
   @media(max-width:640px){.flow{flex-direction:column;align-items:stretch}
     .node,.gate{width:100%}.hop{transform:rotate(90deg);flex-basis:auto;padding:2px 0}}
 
+  /* hero control-plane: visible signal sweep + travelling packet */
+  .plane{overflow:hidden}
+  .plane::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(24% 80% at 0% 50%, rgba(78,168,242,.22), transparent 70%);
+    transform:translateX(-30%);opacity:0;
+    animation:planesweep 6s cubic-bezier(.55,0,.45,1) infinite}
+  @keyframes planesweep{
+    0%{transform:translateX(-30%);opacity:0}
+    12%{opacity:1}
+    88%{opacity:1}
+    100%{transform:translateX(130%);opacity:0}}
+  .plane-head,.flow{position:relative;z-index:1}
+  .packet{position:absolute;top:50%;left:0;width:10px;height:10px;margin-top:-5px;border-radius:50%;
+    background:var(--signal);pointer-events:none;z-index:3;
+    box-shadow:0 0 12px 3px rgba(53,214,160,.85), -18px 0 18px -5px rgba(53,214,160,.45),
+      -34px 0 26px -10px rgba(53,214,160,.25);
+    animation:packetflow 6s cubic-bezier(.55,0,.45,1) infinite}
+  @keyframes packetflow{
+    0%{left:1%;opacity:0}
+    10%{opacity:1}
+    90%{opacity:1}
+    100%{left:99%;opacity:0}}
+  @media(max-width:640px){.packet{display:none}}
+
   /* sections */
   section{padding:76px 0;border-bottom:1px solid var(--line)}
   .shead{margin-bottom:36px}
@@ -133,6 +157,31 @@
   .clinks a.muted{color:var(--muted)}
   .clinks a.muted:hover{color:var(--txt)}
 
+  /* experience timeline */
+  .xp{position:relative;display:grid;gap:0}
+  .xp-item{position:relative;display:grid;grid-template-columns:138px 1fr;gap:26px;padding:0 0 34px}
+  .xp-item:last-child{padding-bottom:0}
+  .xp-when{font-family:var(--mono);font-size:12.5px;color:var(--accent);padding-top:1px;white-space:nowrap}
+  .xp-where{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:5px}
+  .xp-main{position:relative;padding-left:28px;border-left:1px solid var(--line)}
+  .xp-item:last-child .xp-main{border-left-color:transparent}
+  .xp-main::before{content:"";position:absolute;left:-5px;top:3px;width:9px;height:9px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 4px rgba(78,168,242,.12)}
+  .xp-item.founder .xp-main::before{background:var(--signal);box-shadow:0 0 0 4px rgba(53,214,160,.14)}
+  .xp-role{font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:0}
+  .xp-org{font-family:var(--mono);font-size:13px;color:var(--muted);margin:4px 0 12px}
+  .xp-main p{margin:0 0 13px;max-width:64ch;color:#c4d2e3;font-size:15.5px;line-height:1.55}
+  .xp-kpis{display:flex;flex-wrap:wrap;gap:8px}
+  .kpi{font-family:var(--mono);font-size:11.5px;color:#cdd9e8;background:var(--surface2);
+    border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .kpi b{color:var(--signal);font-weight:600}
+  .edu{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .edu-item{border:1px solid var(--line);border-radius:13px;padding:15px 18px;background:var(--surface)}
+  .edu-deg{font-weight:600;font-size:14.5px;color:var(--txt);margin:0 0 5px;line-height:1.35}
+  .edu-meta{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+  @media(max-width:640px){.xp-item{grid-template-columns:1fr;gap:7px}
+    .xp-main{padding-left:22px}.xp-when{padding-top:0}}
+
   /* skills */
   .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
   .skill{border:1px solid var(--line);border-radius:15px;padding:22px;background:var(--surface)}
@@ -154,7 +203,8 @@
   .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
-    .gate,.chip.ok,.chip.log,.chip.scan,.brand .live{animation:none}
+    .gate,.chip.ok,.chip.log,.chip.scan,.brand .live,.plane::after,.packet{animation:none}
+    .packet{display:none}
     html{scroll-behavior:auto}.btn:hover,.card:hover{transform:none}
   }
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:5px}
@@ -167,6 +217,7 @@
     <a class="brand" href="#top"><span class="live" aria-hidden="true"></span>Nasser Zenati</a>
     <nav class="nav">
       <a class="navlink" href="#work" data-fr="Travaux" data-en="Work">Travaux</a>
+      <a class="navlink" href="#experience" data-fr="Parcours" data-en="Experience">Parcours</a>
       <a class="navlink" href="#skills" data-fr="Compétences" data-en="Skills">Compétences</a>
       <a class="navlink" href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
       <span class="langtog" role="group" aria-label="Language">
@@ -197,6 +248,7 @@
         <span class="plane-ttl" data-fr="Control plane : comment une requête traverse Aegis" data-en="Control plane: how a request flows through Aegis">Control plane : comment une requête traverse Aegis</span>
       </div>
       <div class="flow">
+        <span class="packet" aria-hidden="true"></span>
         <span class="node">request</span>
         <span class="hop">&rarr;</span>
         <span class="node">agent<i>LLM local</i></span>
@@ -282,6 +334,92 @@
           </div>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="shead reveal">
+      <span class="eyebrow" data-fr="Parcours" data-en="Experience">Parcours</span>
+      <h2 data-fr="Cadrer, construire, faire adopter." data-en="Plan it, build it, get it adopted.">Cadrer, construire, faire adopter.</h2>
+      <p class="lead" data-fr="Mon parcours réel, du terrain entrepreneurial à la data et l'IA. À l'intersection de la gestion de projet et de la technique. Les chiffres ci-dessous sont ceux que je peux défendre."
+         data-en="My real track record, from founding a company to data and AI. At the intersection of project management and engineering. The figures below are ones I can stand behind.">Mon parcours réel, du terrain entrepreneurial à la data et l'IA. À l'intersection de la gestion de projet et de la technique. Les chiffres ci-dessous sont ceux que je peux défendre.</p>
+    </div>
+
+    <div class="xp">
+      <div class="xp-item reveal">
+        <div>
+          <div class="xp-when" data-fr="2024 — présent" data-en="2024 — present">2024 — présent</div>
+          <div class="xp-where">Suisse romande &amp; Dubaï</div>
+        </div>
+        <div class="xp-main">
+          <h3 class="xp-role" data-fr="Business &amp; Data Analyst — Freelance" data-en="Business &amp; Data Analyst — Freelance">Business &amp; Data Analyst — Freelance</h3>
+          <div class="xp-org" data-fr="PME · cadrage, build &amp; adoption" data-en="SMEs · scoping, build &amp; adoption">PME · cadrage, build &amp; adoption</div>
+          <p data-fr="Je transforme un besoin métier en outil livré et adopté : cadrage, automatisation de reportings via agents IA, tableaux de bord, et formation des équipes. À l'intersection du PM et de la technique."
+             data-en="I turn a business need into a tool that ships and gets adopted: scoping, reporting automation via AI agents, dashboards, and team training. At the intersection of PM and engineering.">Je transforme un besoin métier en outil livré et adopté : cadrage, automatisation de reportings via agents IA, tableaux de bord, et formation des équipes. À l'intersection du PM et de la technique.</p>
+          <div class="xp-kpis">
+            <span class="kpi" data-fr="temps de reporting <b>−60%</b>" data-en="reporting time <b>−60%</b>">temps de reporting <b>−60%</b></span>
+            <span class="kpi" data-fr="temps de recherche <b>−35%</b>" data-en="search time <b>−35%</b>">temps de recherche <b>−35%</b></span>
+            <span class="kpi" data-fr="<b>80+</b> utilisateurs formés" data-en="<b>80+</b> users trained"><b>80+</b> utilisateurs formés</span>
+            <span class="kpi" data-fr="<b>15 000+</b> enregistrements" data-en="<b>15,000+</b> records"><b>15 000+</b> enregistrements</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-item founder reveal">
+        <div>
+          <div class="xp-when">2021 — 2024</div>
+          <div class="xp-where">Annecy, France</div>
+        </div>
+        <div class="xp-main">
+          <h3 class="xp-role" data-fr="Fondateur &amp; Dirigeant" data-en="Founder &amp; Director">Fondateur &amp; Dirigeant</h3>
+          <div class="xp-org">ONE-DECO SAS · e-commerce &amp; <span data-fr="domotique" data-en="home automation">domotique</span></div>
+          <p data-fr="J'ai créé et piloté l'entreprise de bout en bout : produit, données, opérations et distribution multi-enseignes. C'est là que j'ai appris l'ownership, la décision sous contrainte et le pilotage par la donnée."
+             data-en="I founded and ran the company end to end: product, data, operations and multi-retailer distribution. This is where I learned ownership, deciding under constraints, and steering by the numbers.">J'ai créé et piloté l'entreprise de bout en bout : produit, données, opérations et distribution multi-enseignes. C'est là que j'ai appris l'ownership, la décision sous contrainte et le pilotage par la donnée.</p>
+          <div class="xp-kpis">
+            <span class="kpi" data-fr="<b>200+</b> références · Leroy Merlin, ManoMano" data-en="<b>200+</b> references · Leroy Merlin, ManoMano"><b>200+</b> références · Leroy Merlin, ManoMano</span>
+            <span class="kpi" data-fr="<b>11</b> magasins (Rhône-Alpes)" data-en="<b>11</b> stores (Rhône-Alpes)"><b>11</b> magasins (Rhône-Alpes)</span>
+            <span class="kpi" data-fr="reporting &amp; KPI automatisés" data-en="automated reporting &amp; KPIs">reporting &amp; KPI automatisés</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-item reveal">
+        <div>
+          <div class="xp-when">2024 — 2025</div>
+          <div class="xp-where" data-fr="Genève &amp; Zurich" data-en="Geneva &amp; Zurich">Genève &amp; Zurich</div>
+        </div>
+        <div class="xp-main">
+          <h3 class="xp-role" data-fr="Agent d'escale — Gestion d'information" data-en="Ground Operations Agent — Information handling">Agent d'escale — Gestion d'information</h3>
+          <div class="xp-org" data-fr="dnata · environnement régulé multi-sites" data-en="dnata · regulated multi-site environment">dnata · environnement régulé multi-sites</div>
+          <p data-fr="Traitement de données opérationnelles en temps réel dans un environnement exigeant, régulé et multi-sites. Rigueur, procédures strictes, et expérience déjà acquise côté suisse."
+             data-en="Real-time operational data handling in a demanding, regulated, multi-site environment. Rigor, strict procedures, and hands-on experience already on the Swiss side.">Traitement de données opérationnelles en temps réel dans un environnement exigeant, régulé et multi-sites. Rigueur, procédures strictes, et expérience déjà acquise côté suisse.</p>
+          <div class="xp-kpis">
+            <span class="kpi" data-fr="temps réel" data-en="real-time">temps réel</span>
+            <span class="kpi" data-fr="multi-sites régulés" data-en="regulated multi-site">multi-sites régulés</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu reveal">
+      <div class="edu-item">
+        <div class="edu-deg" data-fr="Master Management des Systèmes d'Information" data-en="MSc Information Systems Management">Master Management des Systèmes d'Information</div>
+        <div class="edu-meta" data-fr="HES-SO Lausanne · en cours · 2025–présent" data-en="HES-SO Lausanne · in progress · 2025–present">HES-SO Lausanne · en cours · 2025–présent</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-deg">Google Data Analytics</div>
+        <div class="edu-meta" data-fr="Certificat pro. · Coursera / Google · 2025–2026" data-en="Professional Certificate · Coursera / Google · 2025–2026">Certificat pro. · Coursera / Google · 2025–2026</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-deg" data-fr="Bachelor — Finance" data-en="BSc — Finance">Bachelor — Finance</div>
+        <div class="edu-meta">HES Swiss UMEF Genève · 2020–2023</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-deg" data-fr="Baccalauréat STI2D" data-en="Baccalaureate STI2D">Baccalauréat STI2D</div>
+        <div class="edu-meta" data-fr="Lycée St-Exupéry, Bellegarde · 2020" data-en="Lycée St-Exupéry, Bellegarde · 2020">Lycée St-Exupéry, Bellegarde · 2020</div>
+      </div>
     </div>
   </div>
 </section>
